@@ -1,0 +1,47 @@
+<body>
+   <div class="card">
+      <div class="word">
+         <div class="word-type">
+            <h1 id="cloze">{{Cloze}}</h1>
+            <span class="type">{{WordType}}</span>
+         </div>
+         <div class="phonetics">
+            <div class="play-button" data-src-mp3="{{Audio}}" onclick="soundBtnOnClick()"></div>
+            <span class="phon">{{IPA}}</span>
+         </div>
+      </div>
+      {{type:Word}}
+      <div class="image">
+         <img src="{{Image}}">
+      </div>
+   </div>
+</body>
+<script>
+   function playSound(url) {
+      var a = new Audio(url);
+      a.play();
+   }
+   function soundBtnOnClick() {
+      var url = document.querySelector('[data-src-mp3]').dataset.srcMp3
+      playSound(url)
+   }
+   function replaceRandomChars(word) {
+      var numOfUnderscores = Math.floor(word.length / 2);
+      var replacedWord = word.split('');
+
+      for (var i = 0; i < numOfUnderscores; i++) {
+         var randomIndex = Math.floor(Math.random() * word.length);
+
+         if (replacedWord[randomIndex] !== '_') {
+            replacedWord[randomIndex] = '_';
+         } else {
+            i--;
+         }
+      }
+      console.log(numOfUnderscores);
+      return replacedWord.join('');
+   }
+
+   var word = document.getElementById('cloze').innerHTML;
+   document.getElementById('cloze').innerHTML = replaceRandomChars(word);
+</script>

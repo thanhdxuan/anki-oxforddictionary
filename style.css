@@ -1,0 +1,129 @@
+    /* <style> */
+img {
+   max-width: 400px;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+.card {
+   box-sizing: border-box;
+   margin: auto;
+   display: flex;
+   flex-direction: column;
+   width: 45rem;
+}
+
+h1 {
+   font-size: 3rem;
+}
+
+h2 {
+   font-weight: 525;
+}
+
+.word {
+   display: flex;
+   justify-content: center;
+   align-items: baseline;
+   color: #1A3561;
+   flex-direction: column;
+   margin: auto;
+}
+
+.word-type {
+   display: flex;
+   align-items: baseline;
+   gap: 0.5em;
+}
+
+.type {
+   font-style: italic;
+}
+
+.phonetics {
+   display: flex;
+   align-items: center;
+   gap: 0.5em;
+}
+
+.play-button {
+   height: 1.25rem;
+   width: 1.25rem;
+   background-image: url('https://www.oxfordlearnersdictionaries.com/external/images/documents/audio_bre_initial.svg');
+   background-size: 100%;
+   display: inline-block;
+}
+
+.play-button:hover {
+   cursor: pointer;
+}
+
+
+.definition {
+   font-style: italic;
+   font-size: 1.15rem;
+   color: #1A3561;
+   align-content: center;
+   width: 100%;
+   margin: 0.5rem auto;
+}
+
+img {
+   /* display: block; */
+   height: 100%;
+   width: 100%;
+   border-radius: 0.5em;
+   object-fit: contain;
+}
+
+.image {
+   display: flex;
+   justify-content: center;
+   margin: 1rem auto;
+   width: 100%;
+}
+
+span {
+   margin-right: 0.5rem;
+}
+
+.example {
+   color: inherit;
+   font-style: italic;
+   color: #1A3561;
+}
+
+#typeans {
+   width: 20rem;
+   margin: 2rem auto;
+   padding: 0.5em 1rem;
+   font-size: 18px;
+   color: #1A3561;
+   font-weight: 500;
+   box-sizing: border-box;
+   border: 1px solid #224682;
+}
+
+#typeans:focus {
+   border: 2px solid #224682;
+   outline: none;
+}
+
+.phon {
+   font-size: 1.5rem;
+}
+
+code#typeans {
+   box-sizing: border-box;
+   font-family: inherit;
+   font-size: 2rem;
+   border: none;
+   width: 100% !important;
+   padding: 1rem 15rem;
+   margin: auto;
+   display: flex;
+}
+
+/* </style> */
