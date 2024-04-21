@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+</head>
+<style>
+    img {
+        max-width: 400px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .card {
+        box-sizing: border-box;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        width: 30rem;
+    }
+
+    h1 {
+        font-size: xx-large;
+    }
+
+    h2 {
+        font-weight: 525;
+    }
+
+    .word {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        color: #1A3561;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .word-type {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+    }
+
+    .type {
+        font-style: italic;
+    }
+
+    .phonetics {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    .play-button {
+        height: 1.25rem;
+        width: 1.25rem;
+        background-image: url('https://www.oxfordlearnersdictionaries.com/external/images/documents/audio_bre_initial.svg');
+        background-size: 100%;
+        display: inline-block;
+    }
+
+    .play-button:hover {
+        cursor: pointer;
+    }
+
+    .typing {
+        width: 20rem;
+        margin: 2rem auto;
+        padding: 0.5em 1rem;
+        font-size: 18px;
+        color: #1A3561;
+        font-weight: 500;
+        box-sizing: border-box;
+
+    }
+
+    .definition {
+        font-style: italic;
+        font-size: 1.15rem;
+        color: #1A3561;
+        align-content: center;
+        width: 100%;
+        margin: 0.5rem auto;
+    }
+
+    img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5em;
+        object-fit: contain;
+    }
+
+    .image {
+        margin: 0.5rem 0rem;
+        width: 100%;
+    }
+
+    span {
+        margin-right: 0.5rem;
+    }
+
+    .example {
+        color: inherit;
+        font-style: italic;
+        color: #1A3561;
+    }
+
+    input {
+        border: 1px solid #224682;
+    }
+
+    input:focus {
+        border: 2px solid #224682;
+        outline: none;
+    }
+</style>
+
+<body>
+    <div class="card">
+        <div class="word">
+            <div class="word-type">
+                <h1>sunshine</h1>
+                <span class="type">noun</span>
+            </div>
+            <div class="phonetics">
+                <div class="play-button" data-src-mp3="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3" onclick="soundBtnOnClick()"></div>
+                <span class="phon">/ˈsʌnʃaɪn/</span>
+            </div>
+        </div>
+        <input class="typing" autofocus type="text">
+        <h2>Definition</h2>
+        <div class="definition"><span class="fi fi-us"></span>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        </div>
+        <div class="vi-def definition"><span class="fi fi-vn"></span>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        </div>
+        <div>
+            <h2>Example</h2>
+            <div class="example">
+                <ul>
+                    <li>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    </li>
+                    <li>Example 1</li>
+                    <li>Example 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="image">
+            <img src="https://www.shutterstock.com/image-illustration/examine-study-definition-showed-magnify-260nw-1966457662.jpg" alt="The image demonstrates the word.">
+        </div>
+    </div>
+</body>
+<script>
+    function playSound(url) {
+        var a = new Audio(url);
+        a.play();
+    }
+    function soundBtnOnClick() {
+        var url = document.querySelector('[data-src-mp3]').dataset.srcMp3
+        playSound(url)
+    }
+    
+</script>
+
+</html>
