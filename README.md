@@ -18,6 +18,7 @@
 
 This is an Anki Card template customized for my personal learning purposes (English)
 
+
 This Anki Decks including 8 fields:
 
 - Word
