@@ -16,16 +16,17 @@
 
 ## Introduction
 
-This is a Anki Card template customized for personal learning purpose (English).
+This is an Anki Card template customized for my personal learning purposes (English)
 
 This Anki Decks including 8 fields:
+
 - Word
 
-   The word which you want to learn.
+   The word that you want to learn.
 
 - IPA
 
-   IPA
+   International Phonetic Alphabet.
 
 - WordType
 
@@ -33,7 +34,7 @@ This Anki Decks including 8 fields:
 
 - Audio
 
-   The `url` to the audio that contains pronuncitation of this word.
+   The `url` to the audio that contains the pronunciation of this word.
 
    Example: `https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3`
 
@@ -59,10 +60,11 @@ This Anki Decks including 8 fields:
 
 - Copy content of `back_anki.html` and `front_anki.html` to `Front Template` and `Back Template` in your Anki Cards.
 
-   - Chang replace all card field `{{Your Card Field}}`
+   - Change replace all card field `{{Your Card Field}}`
 
 - Copy content of `style.css` to `Styling` tab.
 
 ## Features
-- Retype word, check typo and random cloze.
+
+- Retype word, check typos and random cloze.
 - Updating ...
