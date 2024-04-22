@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
 </head>
 <style>
-    img {
-        max-width: 400px;
-    }
-
     * {
         box-sizing: border-box;
     }
@@ -26,6 +22,8 @@
 
     h1 {
         font-size: xx-large;
+        padding-bottom: 0;
+        margin: 0 auto;
     }
 
     h2 {
@@ -49,6 +47,9 @@
 
     .type {
         font-style: italic;
+        font-size: 1rem;
+        font-weight: light;
+        margin-right: 0.3rem;
     }
 
     .phonetics {
@@ -71,7 +72,7 @@
 
     .typing {
         width: 20rem;
-        margin: 2rem auto;
+        margin: 1rem auto;
         padding: 0.5em 1rem;
         font-size: 18px;
         color: #1A3561;
@@ -102,9 +103,6 @@
         width: 100%;
     }
 
-    span {
-        margin-right: 0.5rem;
-    }
 
     .example {
         color: inherit;
@@ -120,34 +118,88 @@
         border: 2px solid #224682;
         outline: none;
     }
+
+    .char-true {
+        text-decoration: underline;
+        text-decoration-color: #028a0f;
+
+    }
+
+    .char-false {
+        text-decoration: underline;
+        text-decoration-color: #ff2c2c;
+        color: #ff2c2c;
+    }
+
+    .not-char {
+        background-color: gray;
+    }
+
+    .correct-text {
+        font-size: 1rem;
+        font-weight: lighter;
+        font-style: italic;
+        color: #028a0f;
+    }
+
+    .incorrect-text {
+        font-size: 1rem;
+        font-weight: lighter;
+        font-style: italic;
+        color: #ff2c2c;
+    }
+
+    .result-text {
+        width: 100%;
+        height: 2rem;
+    }
+    .result-text > div > h1 {
+        color: #1A3561;
+        margin: 0;
+    }
+    .result-text > div {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
 </style>
 
 <body>
-    <div class="card">
+    <div class="card" id="card">
         <div class="word">
             <div class="word-type">
-                <h1>sunshine</h1>
+                <h1 id="cloze">sunshine</h1>
                 <span class="type">noun</span>
             </div>
             <div class="phonetics">
-                <div class="play-button" data-src-mp3="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3" onclick="soundBtnOnClick()"></div>
+                <div class="play-button"
+                    data-src-mp3="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3"
+                    onclick="soundBtnOnClick()"></div>
                 <span class="phon">/ˈsʌnʃaɪn/</span>
             </div>
         </div>
-        <input class="typing" autofocus type="text">
+        <input class="typing" autofocus type="text" id="user-answer">
+        <div class="result-text" id="result-text" hidden></div>
         <h2>Definition</h2>
         <div class="definition"><span class="fi fi-us"></span>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.
         </div>
         <div class="vi-def definition"><span class="fi fi-vn"></span>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.
         </div>
         <div>
             <h2>Example</h2>
             <div class="example">
                 <ul>
                     <li>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book.
                     </li>
                     <li>Example 1</li>
                     <li>Example 1</li>
@@ -155,7 +207,8 @@
             </div>
         </div>
         <div class="image">
-            <img src="https://www.shutterstock.com/image-illustration/examine-study-definition-showed-magnify-260nw-1966457662.jpg" alt="The image demonstrates the word.">
+            <img src="https://www.shutterstock.com/image-illustration/examine-study-definition-showed-magnify-260nw-1966457662.jpg"
+                alt="The image demonstrates the word.">
         </div>
     </div>
 </body>
@@ -164,11 +217,82 @@
         var a = new Audio(url);
         a.play();
     }
+
     function soundBtnOnClick() {
         var url = document.querySelector('[data-src-mp3]').dataset.srcMp3
         playSound(url)
     }
-    
+
+    const word = document.getElementById('cloze').innerHTML;
+    function replaceRandomChars() {
+        var numOfUnderscores = Math.floor(word.length / 2);
+        var replacedWord = word.split('');
+
+        for (var i = 0; i < numOfUnderscores; i++) {
+            var randomIndex = Math.floor(Math.random() * word.length);
+
+            if (replacedWord[randomIndex] !== '_') {
+                replacedWord[randomIndex] = '_';
+            } else {
+                i--;
+            }
+        }
+        document.getElementById('cloze').innerHTML = replacedWord.join('');
+    }
+
+    replaceRandomChars();
+
+    var input = document.getElementById('user-answer');
+    let resBox = document.getElementById('result-text');
+    input.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            var correct = true;
+            var value = input.value.trim();
+
+            var htmlRes = document.createElement('h1');
+            if (value.length < word.length) {
+                var gap = word.length - value.length;
+                for (var i = 0; i < gap; i++) {
+                    value += '_';
+                }
+            }
+            
+            if (value.length > 20) {
+                value = value.slice(0, 19);
+            }
+            for (var i = 0; i < value.length; i++) {
+                var ch = value[i];
+                var charNode = document.createElement('span');
+                if (ch !== word[i]) {
+                    charNode.className = 'char-false';
+                    correct = false;
+                }
+                else {
+                    charNode.className = 'char-true';
+                }
+                charNode.appendChild(document.createTextNode(ch));
+                htmlRes.appendChild(charNode);
+            }
+
+            let resText = document.createElement('span');
+            resText.appendChild(document.createTextNode(correct ? 'Correct!' : 'Incorrect!'))
+            resText.className = correct ? 'correct-text' : 'incorrect-text';
+
+            console.log(htmlRes)
+            if (resBox.hasChildNodes()) {
+                resBox.innerHTML = '';
+            }
+            let div = document.createElement('div');
+            div.append(htmlRes, resText);
+            resBox.appendChild(div);
+            resBox.hidden = false;
+            input.value = '';
+            replaceRandomChars()
+        }
+    })
+
 </script>
 
 </html>

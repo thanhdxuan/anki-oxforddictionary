@@ -1,21 +1,33 @@
-{{FrontSide}}
+<div class="card">
+   <div class="word">
+      <div class="word-type">
+         <h1 id="cloze">{{Word}}</h1>
+         <span class="type">{{WordType}}</span>
+      </div>
+      <div class="phonetics">
+         <div class="play-button" data-src-mp3="{{Audio}}" onclick="soundBtnOnClick()"></div>
+         <span class="phon">{{IPA}}</span>
+      </div>
+   </div>
+   <div class="result-text" id="result-text" hidden></div>
+   <div class="image">
+      <img src="{{Image}}">
+   </div>
+</div>
+<hr id="answer" />
 
-<hr id=answer>
-
-<body>
-</body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
 <h2>Definition</h2>
 <div class="definition"><span class="fi fi-us"></span>
-   {{Your Card Field}}
+   {{EnglishDefined}}
 </div>
 <div class="vi-def definition"><span class="fi fi-vn"></span>
-   {{Your Card Field}}
+   {{VietnameseDefined}}
 
 </div>
 <div>
    <h2>Example</h2>
    <div class="example">
-      {{Your Card Field}}
+      {{Example}}
    </div>
 </div>

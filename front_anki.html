@@ -1,21 +1,20 @@
-<body>
-   <div class="card">
-      <div class="word">
-         <div class="word-type">
-            <h1 id="cloze">{{Cloze}}</h1>
-            <span class="type">{{WordType}}</span>
-         </div>
-         <div class="phonetics">
-            <div class="play-button" data-src-mp3="{{Audio}}" onclick="soundBtnOnClick()"></div>
-            <span class="phon">{{IPA}}</span>
-         </div>
+<div class="card">
+   <div class="word">
+      <div class="word-type">
+         <h1 id="cloze">{{Word}}</h1>
+         <span class="type">{{WordType}}</span>
       </div>
-      {{type:Word}}
-      <div class="image">
-         <img src="{{Image}}">
+      <div class="phonetics">
+         <div class="play-button" data-src-mp3="{{Audio}}" onclick="soundBtnOnClick()"></div>
+         <span class="phon">{{IPA}}</span>
       </div>
    </div>
-</body>
+   <input class="typing" autofocus type="text" id="user-answer">
+   <div class="result-text" id="result-text" hidden></div>
+   <div class="image">
+      <img src="{{Image}}">
+   </div>
+</div>
 <script>
    function playSound(url) {
       var a = new Audio(url);
@@ -44,4 +43,55 @@
 
    var word = document.getElementById('cloze').innerHTML;
    document.getElementById('cloze').innerHTML = replaceRandomChars(word);
+
+
+   var input = document.getElementById('user-answer');
+   var resbox = document.getElementById('result-text');
+   input.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+         event.preventDefault();
+
+         var correct = true;
+         var value = input.value.trim();
+
+         var htmlRes = document.createElement('h1');
+         if (value.length < word.length) {
+            var gap = word.length - value.length;
+            for (var i = 0; i < gap; i++) {
+               value += '_';
+            }
+         }
+
+         if (value.length > 20) {
+            value = value.slice(0, 19);
+         }
+         for (var i = 0; i < value.length; i++) {
+            var ch = value[i];
+            var charNode = document.createElement('span');
+            if (ch !== word[i]) {
+               charNode.className = 'char-false';
+               correct = false;
+            }
+            else {
+               charNode.className = 'char-true';
+            }
+            charNode.appendChild(document.createTextNode(ch));
+            htmlRes.appendChild(charNode);
+         }
+
+         let resText = document.createElement('span');
+         resText.appendChild(document.createTextNode(correct ? 'Correct!' : 'Incorrect!'))
+         resText.className = correct ? 'correct-text' : 'incorrect-text';
+
+         if (resbox.hasChildNodes()) {
+            resbox.innerHTML = '';
+         }
+         let div = document.createElement('div');
+         div.append(htmlRes, resText);
+         resbox.appendChild(div);
+         resbox.hidden = false;
+         input.value = '';
+						input.blur();
+      }
+   });
 </script>
