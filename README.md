@@ -35,15 +35,19 @@ This Anki Decks including 8 fields:
 
 - Audio
 
-   The `url` to the audio that contains the pronunciation of this word.
+   The `url` or `path` to the audio that contains the pronunciation of this word.
 
-   Example: `https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3`
+   Example:
+  - `https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/d/def/defin/definition__gb_2.mp3`
+  - `~/Documents/images/audio.mp3`
 
 - Image
 
-   The `url` to the image that demonstrates this word.
+   The `url` or `path` to the image that demonstrates this word.
    
-   Example: `https://images.huffingtonpost.com/2016-09-27-1475000926-901492-2016bestworstcitiesforsoccerfans-thumb.jpg`
+   Example:
+  - `https://images.huffingtonpost.com/2016-09-27-1475000926-901492-2016bestworstcitiesforsoccerfans-thumb.jpg`
+  - `~/Documents/images/audio.mp3`
 
 - VieDefinition
 
