@@ -83,7 +83,7 @@ img {
    display: flex;
    justify-content: center;
    margin: 1rem auto;
-   width: 100%;
+   width: 50%;
 }
 
 .example {
