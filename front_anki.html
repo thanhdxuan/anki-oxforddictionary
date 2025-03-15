@@ -9,7 +9,7 @@
          <span class="phon">{{IPA}}</span>
       </div>
    </div>
-   <input class="typing" autofocus type="text" id="user-answer">
+   <input class="typing" type="text" id="user-answer" autofocus>
    <div class="result-text" id="result-text" hidden></div>
    <div class="image">
       <img src="{{Image}}">
@@ -20,10 +20,12 @@
       var a = new Audio(url);
       a.play();
    }
-   function soundBtnOnClick() {
-      var url = document.querySelector('[data-src-mp3]').dataset.srcMp3
-      playSound(url)
-   }
+  function soundBtnOnClick() {
+      var url = document.querySelector('[data-src-mp3]').dataset.srcMp3;
+      url = url.replaceAll("'", "");
+          console.log(url);
+      playSound(url);
+  }
    function replaceRandomChars(word) {
       var numOfUnderscores = Math.floor(word.length / 2);
       var replacedWord = word.split('');
@@ -94,4 +96,5 @@
 						input.blur();
       }
    });
+	document.getElementById("user-answer").focus();
 </script>
