@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "oxford-anki-flash-cards"
+version = "0.1.0"
+description = ""
+authors = ["Thanh Dau <hello.thanhdauxuan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "oxford" }]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+mypy = "^1.15.0"
+aqt = "^25.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
