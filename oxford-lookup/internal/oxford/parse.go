@@ -20,9 +20,9 @@ func Parse(r io.Reader) (Result, error) {
 	}
 	for n := range doc.Descendants() {
 		if n.Type == html.ElementNode && n.DataAtom == atom.Div {
-			val, ok := attr(n, "id")
+			val, ok := attr(n, "class")
 
-			if !ok || val != "uk_pron" {
+			if !ok || val != "sound audio_play_button pron-uk icon-audio" {
 				continue
 			}
 
