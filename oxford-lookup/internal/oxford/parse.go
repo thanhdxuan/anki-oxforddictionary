@@ -2,6 +2,8 @@ package oxford
 
 import (
 	"io"
+	"slices"
+	"strings"
 
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -21,16 +23,21 @@ func Parse(r io.Reader) (Result, error) {
 	for n := range doc.Descendants() {
 		if n.Type == html.ElementNode && n.DataAtom == atom.Div {
 			val, ok := attr(n, "class")
-
-			if !ok || val != "sound audio_play_button pron-uk icon-audio" {
+			if !ok || val != "webtop" {
 				continue
 			}
-
-			src, ok := attr(n, "data-src-mp3")
-			if !ok || src == "" {
-				break
+			for wn := range n.Descendants() {
+				val, ok := attr(wn, "class")
+				if !ok || !slices.Contains(strings.Fields(val), "pron-uk") {
+					continue
+				}
+				src, ok := attr(wn, "data-src-mp3")
+				if !ok || src == "" {
+					break
+				}
+				return Result{AudioUK: src}, nil
 			}
-			return Result{AudioUK: src}, nil
+			break
 		}
 	}
 	return Result{}, ErrNoAudio

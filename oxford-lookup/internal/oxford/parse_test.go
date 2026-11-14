@@ -26,18 +26,18 @@ func TestParser(t *testing.T) {
 			r, err := os.Open(filePath)
 
 			if err != nil {
-				t.Fatalf("Error when opening file: %s", filePath)
+				t.Fatalf("Error when opening file: %s, %v", filePath, err)
 			}
 			defer r.Close()
 
 			src, err := Parse(r)
 
 			if src.AudioUK != tt.want {
-				t.Errorf("got %q, want %q", src.AudioUK, tt.want)
+				t.Errorf("got %v, want %v", src.AudioUK, tt.want)
 			}
 
 			if !errors.Is(err, tt.wantErr) {
-				t.Errorf("got %q, want %q", err, tt.wantErr)
+				t.Errorf("got %v, want %v", err, tt.wantErr)
 			}
 
 		})

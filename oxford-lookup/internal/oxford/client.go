@@ -21,6 +21,10 @@ var defaultHTTPClient = &http.Client{Timeout: 10 * time.Second}
 
 func (c *Client) Lookup(ctx context.Context, word string) (Result, error) {
 	formattedWord := strings.ReplaceAll(strings.ToLower(strings.TrimSpace(word)), " ", "-")
+	if formattedWord == "" {
+		return Result{}, fmt.Errorf("empty word")
+	}
+
 	u := fmt.Sprintf("%s/definition/english/%s", c.BaseURL, url.PathEscape(formattedWord))
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 
@@ -62,9 +66,5 @@ func (c *Client) Lookup(ctx context.Context, word string) (Result, error) {
 	result.SourceURL = reqURL
 	result.Word = word
 
-	if err != nil {
-		return result, err
-	}
-
-	return result, nil
+	return result, err
 }

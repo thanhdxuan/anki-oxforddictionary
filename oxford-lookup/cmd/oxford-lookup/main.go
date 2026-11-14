@@ -7,8 +7,9 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"oxford-lookup/internal/oxford"
 	"time"
+
+	"oxford-lookup/internal/oxford"
 )
 
 const baseURL = "https://www.oxfordlearnersdictionaries.com"
@@ -30,25 +31,25 @@ func run() int {
 
 	result, err := client.Lookup(ctx, *word)
 	exit := 0
+	var out any = result
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "main: %v\n", err)
 
 		switch {
 		case errors.Is(err, oxford.ErrNotFound):
-			o := &errorOutput{Word: *word, Error: "not_found", Message: err.Error()}
-			json.NewEncoder(os.Stdout).Encode(o)
+			out = &errorOutput{Word: *word, Error: "not_found", Message: err.Error()}
 			exit = 1
 		case errors.Is(err, oxford.ErrNoAudio):
-			o := &errorOutput{Word: *word, Error: "no_audio", Message: err.Error()}
-			json.NewEncoder(os.Stdout).Encode(o)
+			out = &errorOutput{Word: *word, Error: "no_audio", Message: err.Error()}
 			exit = 1
 		default:
-			o := &errorOutput{Word: *word, Error: "network", Message: err.Error()}
-			json.NewEncoder(os.Stdout).Encode(o)
+			out = &errorOutput{Word: *word, Error: "network", Message: err.Error()}
 			exit = 2
 		}
-	} else {
-		json.NewEncoder(os.Stdout).Encode(result)
+	}
+
+	if err := json.NewEncoder(os.Stdout).Encode(out); err != nil {
+		return 2
 	}
 	return exit
 }
