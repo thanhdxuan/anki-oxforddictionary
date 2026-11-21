@@ -23,9 +23,15 @@ profile.cov
 go.work
 go.work.sum
 
+# Pyenv
+.python-version
+
 # env file
 .env
 
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Go bin
+addon/bin/*

@@ -21,7 +21,7 @@ class GoBackend:
         
         _arch = platform.machine()
         if platform.machine() in ["aarch64", "arm64"]:
-            _arch = "arm"
+            _arch = "arm64"
         if platform.machine() in ["x86_64", "amd64"]:
             _arch = "amd64"
 
