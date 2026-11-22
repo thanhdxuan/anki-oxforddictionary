@@ -26,6 +26,8 @@ go.work.sum
 # Pyenv
 .python-version
 
+__pycache__
+
 # env file
 .env
 
@@ -35,3 +37,4 @@ go.work.sum
 
 # Go bin
 addon/bin/*
+.DS_Store

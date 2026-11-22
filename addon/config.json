@@ -1,7 +1,6 @@
 {
-  "note_type": "Oxford Vocabulary",
   "word_field": "Word",
   "audio_field": "Audio",
   "timeout_seconds": 5,
-  "overwrite_existing": false
+  "overwrite_existing": true
 }

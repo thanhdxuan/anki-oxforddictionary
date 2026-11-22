@@ -1,29 +1,49 @@
-# import the main window object (mw) from aqt
-from aqt import mw, gui_hooks, addcards
-# import the "show info" tool from utils.py
-from aqt.utils import showInfo
-# import all of the Qt GUI library
-from aqt.qt import *
-from .backend import GoBackend
-from PyQt6.QtWidgets import QLineEdit
-import anki
-from anki import hooks, collection, notes, decks
+from anki import collection, decks, hooks, notes, utils
+from aqt import mw
 
-# We're going to add a menu item below. First we want to create a function to
-# be called when the menu item is activated.
-config = mw.addonManager.getConfig(__name__)
+from .backend import GoBackend
+from .models import OxfordLookupError, OxfordLookupFailed
+from .rules import should_lookup
+
+if mw is not None:
+    config = mw.addonManager.getConfig(__name__)
+    logger = mw.addonManager.get_logger(__name__)
 
 be = GoBackend()
 
-def oxfordlookup_audiouk(col: collection.Collection, note: notes.Note, deck_id: decks.DeckId) -> None:
-    """(col: anki.collection.Collection, note: anki.notes.Note, deck_id: anki.decks.DeckId)"""
-    fid = note._field_index("Word")
-    aid = note._field_index("Audio")
-    word = note.fields[fid]
-    res = be.run_cmd(word=word, timeout=config["timeout_seconds"])
-    audio_uk = res["audio_uk"]
-    note.fields[aid] = audio_uk
+
+def oxfordlookup_audiouk(
+    col: collection.Collection, note: notes.Note, deck_id: decks.DeckId
+) -> None:
+    try:
+        wf = config["word_field"]
+        af = config["audio_field"]
+        to = config["timeout_seconds"]
+        ow_if_existing = config["overwrite_existing"]
+        word = utils.strip_html(note[wf])
+        audio = utils.strip_html(note[af])
+    except KeyError as e:
+        logger.error("error when getting config or fields: %s", e)
+        return
+
+    # keep existing audio unless overwrite is enabled
+    if not should_lookup(
+        word=word.strip(), audio=audio.strip(), overwrite=ow_if_existing
+    ):
+        return
+
+    try:
+        res = be.run_cmd(word=word, timeout=to)
+        audio_uk = res["audio_uk"]
+        note[af] = audio_uk
+    except FileNotFoundError as e:
+        logger.error("not found oxford backend binary %s", e)
+    except OxfordLookupFailed:
+        logger.exception("error when looking up word=%r", word)
+    except OxfordLookupError:
+        logger.warning("not found or no audio for word=%s", word)
+    except Exception:
+        logger.exception("bug while looking up %r", word)
+
 
 hooks.note_will_be_added.append(oxfordlookup_audiouk)
-
-
