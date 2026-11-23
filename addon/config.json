@@ -1,0 +1,6 @@
+{
+  "word_field": "Word",
+  "audio_field": "Audio",
+  "timeout_seconds": 5,
+  "overwrite_existing": true
+}

@@ -1,0 +1,50 @@
+[project]
+name = "oxford-lookup"
+version = "0.1.0"
+description = "An Anki addon for automatically looking up audio file for a word from Oxford's Learner Dictionary"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+authors = [
+    { name = "Thanh Dau", email = "hello.thanhdauxuan@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+
+[dependency-groups]
+test = [
+    "pytest>=9.2.0",
+]
+
+dev = [
+    "aqt[qt7]>=26.9.4",
+    "anki>=26.9.4",
+    "pytest>=9.2.0",
+]
+
+# --- Tool Configurations ---
+#
+# [tool.ruff]
+# line-length = 88
+# target-version = "py310"
+#
+# [tool.ruff.lint]
+# select = ["E", "F", "I", "UP", "B"]
+#
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["addon"]
+
+#
+# [tool.mypy]
+# python_version = "3.10"
+# strict = true
