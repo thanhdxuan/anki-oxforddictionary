@@ -14,17 +14,25 @@ import (
 
 const baseURL = "https://www.oxfordlearnersdictionaries.com"
 
+var version = "dev"
+
 func main() {
 	os.Exit(run())
 }
 
 func run() int {
-
 	timeout := flag.Int("timeout", 10, "request timeout (seconds)")
 	word := flag.String("word", "", "request word (string)")
+	ver := flag.Bool("version", false, "print version and exit")
 
 	flag.Parse()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*(time.Duration(*timeout)))
+
+	if *ver {
+		fmt.Printf("oxford-lookup version: %s\n", version)
+		return 0
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(*timeout))
 	defer cancel()
 
 	client := &oxford.Client{BaseURL: baseURL}

@@ -17,18 +17,24 @@ class GoBackend:
         if sys.platform not in ["win32", "darwin", "linux"]:
             raise Exception("Platform isn't supported")
 
-        _os = sys.platform
+        self._os = sys.platform
+        _ext = ""
+
+        self._popen_kwargs = {}
         if sys.platform == "win32":
-            _os = "windows"
+            self._os = "windows"
+            _ext = ".exe"
+            self._popen_kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
 
-        _arch = platform.machine()
+        self._arch = platform.machine()
         if platform.machine() in ["aarch64", "arm64"]:
-            _arch = "arm64"
+            self._arch = "arm64"
         if platform.machine() in ["x86_64", "amd64"]:
-            _arch = "amd64"
-
+            self._arch = "amd64"
         self._bin = os.path.join(
-            os.path.dirname(__file__), "bin", f"oxford-lookup-{_os}-{_arch}"
+            os.path.dirname(__file__),
+            "bin",
+            f"oxford-lookup-{self._os}-{self._arch}{_ext}",
         )
         self._subprocess_timeout = 5
 
@@ -43,9 +49,14 @@ class GoBackend:
             raise FileNotFoundError(self._bin)
 
         cmd = [str(self._bin), "-timeout", str(timeout), "-word", str(word)]
+
         resp = subprocess.run(
-            cmd, capture_output=True, timeout=timeout + self._subprocess_timeout
+            cmd,
+            capture_output=True,
+            timeout=timeout + self._subprocess_timeout,
+            **self._popen_kwargs,
         )
+
         exit_code = resp.returncode
 
         if exit_code != 0:
