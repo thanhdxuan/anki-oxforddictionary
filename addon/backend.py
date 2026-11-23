@@ -48,6 +48,9 @@ class GoBackend:
         if not os.path.exists(self._bin):
             raise FileNotFoundError(self._bin)
 
+        bin_executable = os.access(self._bin, os.X_OK)
+        if not bin_executable:
+            os.chmod(self._bin, 0o755)
         cmd = [str(self._bin), "-timeout", str(timeout), "-word", str(word)]
 
         resp = subprocess.run(
