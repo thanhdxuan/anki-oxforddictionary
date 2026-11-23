@@ -1,6 +1,5 @@
 import pytest
-
-from .rules import should_lookup
+from rules import should_lookup
 
 
 @pytest.mark.parametrize(

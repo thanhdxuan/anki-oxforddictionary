@@ -5,9 +5,8 @@ from .backend import GoBackend
 from .models import OxfordLookupError, OxfordLookupFailed
 from .rules import should_lookup
 
-if mw is not None:
-    config = mw.addonManager.getConfig(__name__)
-    logger = mw.addonManager.get_logger(__name__)
+config = mw.addonManager.getConfig(__name__)
+logger = mw.addonManager.get_logger(__name__)
 
 be = GoBackend()
 

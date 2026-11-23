@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write # Required to create releases and upload assets
+
+jobs:
+  call-ci:
+    uses: ./.github/workflows/ci.yml
+    with:
+      artifact-name: addon-bundle
+  release:
+    needs: call-ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: addon-bundle
+          path: ./dist
+      - name: Create GitHub Release
+        run: gh release create "$GITHUB_REF_NAME" dist/*.ankiaddon --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

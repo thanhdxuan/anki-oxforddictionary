@@ -1,0 +1,58 @@
+
+name: Build and test
+
+env:
+  PYTHON_VERSION: '3.13'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+  workflow_call:
+    outputs:
+      artifact-name:
+        description: "Addon package"
+        value: ${{ jobs.build.outputs.artifact-name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact-name: ${{ steps.upload.outputs.artifact-name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: 'oxford-lookup/go.mod'
+          cache-dependency-path: 'oxford-lookup/go.sum'
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - run: pip install -r poetry-requirements.txt
+      - run: poetry config virtualenvs.in-project true
+      - run: poetry install --only=test --no-root --no-interaction
+      - name: Test
+        run: poetry run make test
+      - name: Build
+        run: make build
+      - name: Package
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: make package VERSION="${REF_NAME//\//-}"
+      - name: Upload package as an artifact
+        id: upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: oxford-lookup-${{ github.run_id }}
+          path: ./dist/*.ankiaddon
+
+

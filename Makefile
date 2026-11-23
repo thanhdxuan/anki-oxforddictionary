@@ -1,8 +1,9 @@
 VERSION ?= $(shell git describe --tags --always --dirty)
 
-TEMPDIR := dist/tmp
-MANIFEST := $(TEMPDIR)/manifest.json
 REPO_ROOT := $(CURDIR)
+DIST_DIR := $(REPO_ROOT)/dist
+TEMPDIR := $(DIST_DIR)/tmp
+MANIFEST := $(TEMPDIR)/manifest.json
 ADDON_DIR := $(REPO_ROOT)/addon
 BIN_DIR := $(ADDON_DIR)/bin
 GOBACKEND_DIR := $(REPO_ROOT)/oxford-lookup
@@ -35,16 +36,16 @@ package: clean build $(TEMPDIR)
 	cp $(ADDON_DIR)/models.py $(TEMPDIR)
 	cp $(ADDON_DIR)/rules.py $(TEMPDIR)
 	echo "{ \"name\": \"Oxford Audio Lookup\", \"package\": \"oxford_lookup\", \"human_version\": \"$(VERSION)\" }" > $(MANIFEST)
-	cd $(TEMPDIR) && zip -r ../$(ADDON_PACKAGE_NAME) .
+	cd $(TEMPDIR) && zip -r $(DIST_DIR)/$(ADDON_PACKAGE_NAME) .
 
 clean:
 	rm -f $(BIN_DIR)/$(BINARY_NAME)-*
-	rm -rf $(TEMPDIR) dist/$(ADDON_PACKAGE_NAME)
+	rm -rf $(TEMPDIR) $(DIST_DIR)/$(ADDON_PACKAGE_NAME)
 
 test: pytest be_test
 
 pytest:
-	python -m pytest $(ADDON_DIR)
+	python -m pytest $(CURDIR)/tests
 
 be_test:
 	go test -C $(GOBACKEND_DIR) ./...
